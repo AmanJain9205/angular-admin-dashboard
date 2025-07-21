@@ -1,0 +1,68 @@
+.sidebar {
+  width: 200px;
+  min-height: 100vh;
+  transition: margin-left 0.3s, visibility 0.3s;
+  margin-left: 0;
+  position: fixed;
+  z-index: 1000;
+  background: #0d6efd;
+  left: 0;
+  top: 0;
+  visibility: visible;
+
+  &.active {
+    visibility: visible;
+  }
+
+  .sidebar-header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font: 600 1rem "Segoe UI", sans-serif;
+
+  .navbar-brand {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+  .btn {
+    position: absolute;
+    right: 0.5rem;
+  }
+}
+
+}
+
+.sidebar:not(.active) {
+  margin-left: -200px;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.flex-grow-1 {
+  margin-left: 200px;
+  transition: margin-left 0.3s;
+}
+
+.sidebar-footer {
+  font-size: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+@media (max-width: 768px) {
+  .sidebar {
+    margin-left: -200px;
+
+    &.active {
+      margin-left: 0;
+      visibility: visible;
+    }
+  }
+
+  .flex-grow-1 {
+    margin-left: 0;
+  }
+}

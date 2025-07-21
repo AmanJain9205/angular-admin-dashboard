@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@use 'bootstrap/scss/bootstrap';
+@use "@fortawesome/fontawesome-free/css/all.min.css";
+
+
+/* styles.scss */
+body.dark-theme {
+  background-color: #121212;
+  color: white;
+}
+
+body.dark-theme .card,
+body.dark-theme .form-control,
+body.dark-theme .form-select {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+body.dark-theme a,
+body.dark-theme label {
+  color: #ccc;
+}
+
+body.dark-theme input,
+body.dark-theme select {
+  background-color: #2b2b2b;
+  color: white;
+  border-color: #444;
+}
+
+body.dark-theme .sidebar {
+  background-color: #1f1f1f;
+}
+
+body.dark-theme .nav-link {
+  color: #ccc !important;
+}
+
+body.dark-theme .nav-link:hover {
+  color: white !important;
+}
+

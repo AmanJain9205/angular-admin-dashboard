@@ -1,0 +1,36 @@
+<div class="mb-3">
+  <h4 class="fw-bold">Settings</h4>
+</div>
+
+<div class="settings-container">
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      [(ngModel)]="isDarkMode"
+      (change)="toggleTheme()"
+      id="themeToggle"
+    />
+    <label class="form-check-label" for="themeToggle">Dark Mode</label>
+  </div>
+
+  <div class="mt-3">
+    <label for="chartType">Default Chart Type:</label>
+    <select class="form-select" id="chartType" [(ngModel)]="chartType">
+      <option value="line">Line</option>
+      <option value="bar">Bar</option>
+      <option value="pie">Pie</option>
+    </select>
+  </div>
+
+  <div class="mt-3 form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      [(ngModel)]="enableRealtime"
+      (change)="setRealtime()"
+      id="realtimeToggle"
+    />
+    <label class="form-check-label" for="realtimeToggle">Enable Real-time Refresh</label>
+  </div>
+</div>

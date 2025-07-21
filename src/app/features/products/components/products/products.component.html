@@ -1,0 +1,202 @@
+<div class="mb-3">
+  <h4 class="fw-bold">Products</h4>
+</div>
+
+<button class="btn btn-success mb-3" (click)="openAddModal(addProductModal)">
+  Add Product
+</button>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Stock</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of pagedProducts">
+      <td>{{ product.name }}</td>
+      <td>{{ product.category }}</td>
+      <td [ngClass]="{ 'table-danger': isLowStock(product.stock) }">
+        {{ product.stock }}
+      </td>
+      <td>{{ product.price | currency : "INR" : "symbol" }}</td>
+      <td>
+        <button
+          class="btn btn-sm btn-primary"
+          (click)="openEditModal(product, editProductModal)"
+        >
+          Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #editProductModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Edit Product</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-2">
+      <label>Name:</label>
+      <input class="form-control" [(ngModel)]="selectedProduct.name" />
+    </div>
+    <div class="mb-2">
+      <label>Category:</label>
+      <input class="form-control" [(ngModel)]="selectedProduct.category" />
+    </div>
+    <div class="mb-2">
+      <label>Stock:</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="selectedProduct.stock"
+      />
+    </div>
+    <div class="mb-2">
+      <label>Price:</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="selectedProduct.price"
+      />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
+    <button class="btn btn-primary" (click)="saveEdit(); modal.close()">
+      Save
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #addProductModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Add Product</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <form #addForm="ngForm" (ngSubmit)="addProduct(addForm, modal)" novalidate>
+    <div class="modal-body">
+      <div class="mb-2">
+        <label>Name:</label>
+        <input
+          class="form-control"
+          name="name"
+          [(ngModel)]="newProduct.name"
+          required
+          #name="ngModel"
+        />
+        <div
+          *ngIf="name.invalid && (name.dirty || name.touched)"
+          class="text-danger small"
+        >
+          Name is required.
+        </div>
+      </div>
+      <div class="mb-2">
+        <label>Category:</label>
+        <input
+          class="form-control"
+          name="category"
+          [(ngModel)]="newProduct.category"
+          required
+          #category="ngModel"
+        />
+        <div
+          *ngIf="category.invalid && (category.dirty || category.touched)"
+          class="text-danger small"
+        >
+          Category is required.
+        </div>
+      </div>
+      <div class="mb-2">
+        <label>Stock:</label>
+        <input
+          type="number"
+          class="form-control"
+          name="stock"
+          [(ngModel)]="newProduct.stock"
+          required
+          min="0"
+          #stock="ngModel"
+        />
+        <div
+          *ngIf="stock.invalid && (stock.dirty || stock.touched)"
+          class="text-danger small"
+        >
+          Stock is required and must be 0 or more.
+        </div>
+      </div>
+      <div class="mb-2">
+        <label>Price:</label>
+        <input
+          type="number"
+          class="form-control"
+          name="price"
+          [(ngModel)]="newProduct.price"
+          required
+          min="0"
+          #price="ngModel"
+        />
+        <div
+          *ngIf="price.invalid && (price.dirty || price.touched)"
+          class="text-danger small"
+        >
+          Price is required and must be 0 or more.
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" type="button" (click)="modal.dismiss()">
+        Cancel
+      </button>
+      <button
+        class="btn btn-success"
+        type="submit"
+        [disabled]="addForm.invalid"
+      >
+        Add
+      </button>
+      <div
+        *ngIf="addForm.invalid"
+        class="text-danger small w-100 mt-2 text-center"
+      >
+        Please fill all fields correctly to enable Add button.
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<nav *ngIf="totalPages > 1" aria-label="Product pagination">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="currentPage === 1">
+      <button
+        class="page-link"
+        (click)="goToPage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+      >
+        Previous
+      </button>
+    </li>
+    <li
+      class="page-item"
+      *ngFor="let page of [].constructor(totalPages); let i = index"
+      [class.active]="currentPage === i + 1"
+    >
+      <button class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
+    </li>
+    <li class="page-item" [class.disabled]="currentPage === totalPages">
+      <button
+        class="page-link"
+        (click)="goToPage(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+      >
+        Next
+      </button>
+    </li>
+  </ul>
+</nav>
