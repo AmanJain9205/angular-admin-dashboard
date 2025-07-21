@@ -1,0 +1,10 @@
+{
+  "routes": {
+    "/angular-admin-dashboard": {},
+    "/angular-admin-dashboard/analytics": {},
+    "/angular-admin-dashboard/dashboard": {},
+    "/angular-admin-dashboard/products": {},
+    "/angular-admin-dashboard/settings": {},
+    "/angular-admin-dashboard/users": {}
+  }
+}
